@@ -1,0 +1,38 @@
+sudo: required
+language: node_js
+services:
+- docker
+node_js:
+- node
+before_install:
+- curl -L https://releases.rancher.com/compose/v0.12.1/rancher-compose-linux-amd64-v0.12.1.tar.gz
+  -o rancher-compose.tar.gz
+- tar -zxvf rancher-compose.tar.gz && mv ./rancher-compose-v0.12.1/rancher-compose
+  ./rancher-compose && rm -fr ./rancher-compose-v0.12.1 && rm ./rancher-compose.tar.gz
+install:
+- npm install
+script:
+- npm run build
+after_success:
+- docker build -t krack/yoga-site:test .
+- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+- docker push krack/yoga-site:test
+- "./rancher-compose -p yoga-site-dev -f docker-compose.yml -r rancher-compose.yml -e dev.env rm -f"
+- "./rancher-compose -p yoga-site-dev -f docker-compose.yml -r rancher-compose.yml -e dev.env up -d"
+before_deploy:
+- cd dist && zip -ro ../yoga-site.zip * && cd ..
+- docker tag krack/yoga-site:test krack/yoga-site:${TRAVIS_TAG}
+- docker tag krack/yoga-site:${TRAVIS_TAG} krack/yoga-site:latest
+- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+- docker push krack/yoga-site:${TRAVIS_TAG}
+- docker push krack/yoga-site:latest
+- "./rancher-compose -p yoga-site-prod -f docker-compose.yml -r rancher-compose.yml -e prod.env rm -f"
+- "./rancher-compose -p yoga-site-prod -f docker-compose.yml -r rancher-compose.yml -e prod.env up -d"
+deploy:
+  provider: releases
+  api_key:
+    secure: Qbc0pbOE0kMV7q3efb69L53ZfBvLypXKZbyO6uJJsLl5GJ4pI1dj9aWZbEJ5G7s+ZhHShLNlyoN1U4naJNZcRHBnXDFv65P4gSkWws0GiCVTXuTpq+IOvixb9Jt3u9nqNLKf18zdEwZWVHKTWfvo/lLoiWmCIqQFQSrvegfo0uigi2G+wR/mbd7sEsSqZOxmepPoQiGndwbGMVPDTGc8eccX6UxCOD76xwNuMDYIy6/5lSSxcRVQrQmek4HJ1SzDV9FGMDyehIycS3wOp0o+gH1rhiq/J6NXTWwfcjDOYff6EogP4W0EPVLvR5D1B5mK9x2Oz+wdTcyy+EPc4EQdVqbqNJCNschTBCP69n8Eop2daEzbcOaOzm5QFwZozmoIaMQmHZGHBnbbgpC6DffU/oXKCZv7brwqmcCwCV8i83/7j5uVndNNe0VkBTPQvMVXJMSB+IQZoBpzlaDMgN4CbLgKwtMiT7Clnm8gEtCoFu7fDevSXQgjOoI39eLjPxvU7wkORbYIpYBqPkzkO/Pev7Xq8+XFFa8TwJfjppAQuf2I57OwB7KcmZmPXn0kCBI2oVkGpsQeuH0hAIqDmz5u2AJxKrpG7o7ODgXgdU0iRdqfkxzSR7RLG36s787f19WpBWlpSibq9L5aC/sgOFsJlnWZmVXK3iFMkRgPo7kxjrk=
+  file: yoga-site.zip
+  skip_cleanup: true
+  on:
+    tags: true

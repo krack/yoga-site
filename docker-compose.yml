@@ -1,0 +1,12 @@
+version: '2'
+services:  
+  load-balancer:
+    ports:
+    - ${HOST_PORT}
+    image: rancher/lb-service-haproxy:v0.4.6
+    labels:
+      proxy_url: ${EXPOSE_URL}
+  web:
+    labels:
+      io.rancher.container.pull_image: always
+    image: krack/yoga-site:${TAG}
