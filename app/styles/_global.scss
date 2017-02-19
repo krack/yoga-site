@@ -25,7 +25,8 @@ body> h1{
 
 section {
   margin: 10px 50px;
-  width: 75%;
+  width: 60%;
+  max-width: 1000px;
 }
 
 
@@ -88,20 +89,32 @@ section {
 
 }
 /* Responsive: Portrait tablets and up */
+@media screen and (max-width: 1060px) {
+  section{
+    width: 50%;
+    max-width: 550px;
+  }
+  .contact{
+    width: 250px;
+  }
+
+}
+/* Responsive: Portrait tablets and up */
 @media screen and (max-width: 768px) {
  
-  .contact, #content,  nav, nav ul, nav ul li{
+  .contact, .activity li li{
     display: inherit;
     position: inherit;
   }
-  h1{
-    font-size: 2.2em;
-    text-align: center;
-    display: inline-block;
+  section{
     width: 100%;
+    max-width: 100%;
+    margin-left: inherit; 
   }
   .contact{
-    margin: 25px;
+    margin: auto;
+
+    width: 350px;
   }
   
 }
