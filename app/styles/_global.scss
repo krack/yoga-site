@@ -10,59 +10,30 @@ body{
   background-color: $color4;
   color: $color5;
 }
-body> h1, nav, nav ul, nav ul li{ 
-  display: inline-block;
-}
+
 body> h1{ 
-  height: 50px;
-  line-height: 50px;
+  height: 250px;
+  line-height: 250px;
   margin-top: 0px;
-}
-body> h1{
+  display: block;
+  background-image: url(../images/home.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   color: $color2;
   font-family: cursive;
 }
-body> h1:before{
-  content: ' ';
-  height: 50px;
-  display: block;
-  position: absolute;
-  right: 0;
-  left: 0;
-  background-color: $color1;
-  z-index: -5;
-}
-nav {
-  margin-bottom: 15px;
-  vertical-align: bottom;
-  ul{
-    margin: 0px;
-    width: 100%;
-    li{
-      margin-right:10px;
-    }
-  }
-  a{
-    color: $color2;
-    &:hover, &:focus{
-      color: $color2;
-      text-decoration: none;
-    }
-    &.current{
-      color:$color3;
-    }
-  }
+
+section {
+  margin: 10px 50px;
+  width: 75%;
 }
 
-#content{
-  position: absolute;
-  right: 260px;
-  top: 50px;
-  left: 5px;
-  display: inline-block;
-  vertical-align: top;
-}
+
 .contact{
+  position: absolute;
+  right: 10px;
+  top: 270px;
+
   width: 350px;
   margin: auto;
   text-align: center;
@@ -99,34 +70,23 @@ nav {
   }
 }
 
-table{
-  width: 900px;
-  max-width: 100%;
+.activity li li{
+  display: table-row;
+  & >*{
+    display: table-cell;
+    padding-left: 50px;
+  }
+  &.and-more{
+    display: inline-block;
+  }
 }
 
-table, td, th{
-  border: solid $color1 1px;
-  text-align: center;
+.time{
+  margin-left: 30px;
+  @extend .glyphicon;
+  @extend .glyphicon-time;
+
 }
-th{
-  background-color: $color1;
-  color: $color2;
-}
-
-ul > li{
-  list-style: circle;
-}
-.redirect-message{
-  padding-top: 20px;
-  margin: auto;
-  text-align: center;
-}
-
-
-
-
-
-
 /* Responsive: Portrait tablets and up */
 @media screen and (max-width: 768px) {
  
@@ -139,27 +99,6 @@ ul > li{
     text-align: center;
     display: inline-block;
     width: 100%;
-  }
-
-  nav {
-    a{
-      color: $color1;
-      display: block;
-      text-align: center;
-      &:hover, &:focus{
-        color: $color1;
-        text-decoration: none;
-      }
-      &.current{
-        color: $color2;
-        background-color: $color3;
-      }
-    }
-
-    ul, li{
-      padding: 0;
-      width: 100%;
-    }
   }
   .contact{
     margin: 25px;
