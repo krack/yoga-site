@@ -17,7 +17,7 @@ after_success:
 - docker build -t krack/yoga-site:test .
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 - docker push krack/yoga-site:test
-- "./rancher-compose -p yoga-site-dev -f docker-compose.yml -r rancher-compose.yml -e dev.env rm -f"
+- "./rancher-compose -p yoga-site-dev -e dev.env rm -f"
 - "./rancher-compose -p yoga-site-dev -f docker-compose.yml -r rancher-compose.yml -e dev.env up -d"
 before_deploy:
 - cd dist && zip -ro ../yoga-site.zip * && cd ..
@@ -26,7 +26,7 @@ before_deploy:
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 - docker push krack/yoga-site:${TRAVIS_TAG}
 - docker push krack/yoga-site:latest
-- "./rancher-compose -p yoga-site-prod -f docker-compose.yml -r rancher-compose.yml -e prod.env rm -f"
+- "./rancher-compose -p yoga-site-prod -e prod.env rm -f"
 - "./rancher-compose -p yoga-site-prod -f docker-compose.yml -r rancher-compose.yml -e prod.env up -d"
 deploy:
   provider: releases
