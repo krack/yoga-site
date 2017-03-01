@@ -6,7 +6,9 @@ services:
     image: rancher/lb-service-haproxy:v0.4.6
     labels:
       proxy_url: ${EXPOSE_URL}
+      io.rancher.container.network: true
   web:
     labels:
       io.rancher.container.pull_image: always
+      io.rancher.container.network: true
     image: krack/yoga-site:${TAG}
