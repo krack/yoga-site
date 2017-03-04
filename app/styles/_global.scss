@@ -22,6 +22,9 @@ body> h1{
   color: $color2;
   font-family: cursive;
 }
+h2{
+  color: $color2;
+}
 
 section {
   margin: 10px 50px;
@@ -73,13 +76,21 @@ section {
 
 .activity li li{
   display: table-row;
-  & >*{
+  line-height: 23  px;
+  & > span{
     display: table-cell;
     padding-left: 50px;
   }
-  &.and-more{
-    display: inline-block;
+   &:before{
+    content: '- '
   }
+  &.and-more{
+    display: block;
+  }
+  &.and-more:before{
+    content: ''
+  }
+
 }
 
 .time{
