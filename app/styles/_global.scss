@@ -172,3 +172,58 @@ section {
   }
   
 }
+.email{
+  .day-date{
+    position: relative;
+    background-image: url(../images/calendar.png);
+    width: 200px;
+    height: 242px;
+    float: left;
+    font-size: 0;
+      margin-right: 10px;
+    table{
+      float: left;
+      //margin-top:-190px;
+      margin-top: 60px;
+      width: 200px;
+      border: none;
+    }
+    img{
+      z-index: 0;
+    }
+    .day{
+      color: $color2;
+      font-size: 72px;
+     // position: absolute;
+     // top: 100px;
+    //  right: 0;
+    //  left: 0;
+      text-align: center;
+    }
+    .month{
+      color: $color4;
+      font-size: 24px;
+      //position: absolute;
+     // top: 50px;
+     // right: 0;
+      //left: 0;
+      text-align: center;
+    }
+    .day-time{
+      font-size: 20px;
+      //position: absolute;
+      //bottom: 0;
+      text-align: center;
+     //  right: 0;
+     // left: 0;
+    }
+  }
+
+  .describe{
+  }
+  .pub-contact-me{
+    margin-top: 30px;
+    clear: left;
+    text-align: center;
+  }
+}

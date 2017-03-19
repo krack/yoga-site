@@ -4,6 +4,11 @@ const gulpLoadPlugins = require('gulp-load-plugins');
 const browserSync = require('browser-sync');
 const del = require('del');
 const wiredep = require('wiredep').stream;
+var emailBuilder = require('gulp-email-builder');
+var img64 = require('gulp-img64');
+var cssBase64 = require('gulp-css-base64');
+
+
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
@@ -49,7 +54,7 @@ gulp.task('lint', () => {
 });
 
 gulp.task('html', ['styles', 'scripts'], () => {
-  return gulp.src('app/*.html')
+  return gulp.src(['app/*.html'])
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
     .pipe($.if('*.js', $.uglify()))
     .pipe($.if('*.css', $.cssnano({safe: true, autoprefixer: false})))
@@ -163,7 +168,28 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras', 'pages'], () => {
+gulp.task('manage-css-email',['html'], ()=>{
+  return gulp.src('dist/styles/email.css')
+        .pipe(cssBase64())
+        .pipe(gulp.dest('dist/styles/'));
+});
+
+
+gulp.task('create-email',['manage-css-email'], ()=>{
+  return gulp.src(['./dist/invitation.html', './dist/message.html'])
+        .pipe(emailBuilder({
+        }).build())
+        .pipe(gulp.dest('./dist/'));
+  });
+gulp.task('email',['create-email'], function () {
+     return gulp.src(['./dist/invitation.html', './dist/message.html'])
+        .pipe(img64())
+        .pipe(gulp.dest('./dist/'));
+});
+
+
+
+gulp.task('build', ['lint', 'html', 'images','fonts', 'extras', 'pages', 'email'], () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
