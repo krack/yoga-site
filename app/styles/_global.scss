@@ -130,6 +130,7 @@ section {
 /* Responsive: Portrait tablets and up */
 @media screen and (max-width: 1060px) {
   header{
+    background-image: url(../images/home-1060.jpg);
     h1{
       top: 5%;
       font-size: 3em;
@@ -147,6 +148,7 @@ section {
 /* Responsive: Portrait tablets and up */
 @media screen and (max-width: 768px) {
   header{
+    background-image: url(../images/home-720.jpg);
     h1{
       top: 0%;
       font-size: 2em;
