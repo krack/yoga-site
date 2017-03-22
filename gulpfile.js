@@ -168,7 +168,7 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('manage-css-email',['html'], ()=>{
+gulp.task('manage-css-email',['images', 'html'], ()=>{
   return gulp.src('dist/styles/email.css')
         .pipe(cssBase64())
         .pipe(gulp.dest('dist/styles/'));
