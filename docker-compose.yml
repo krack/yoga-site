@@ -6,7 +6,6 @@ services:
     image: rancher/lb-service-haproxy:v0.5.9
     labels:
       rap.host: ${EXPOSE_URL}
-      rap.le_host: ${EXPOSE_URL}
       rap.port: ${HOST_PORT}
       io.rancher.container.network: true
   web:
